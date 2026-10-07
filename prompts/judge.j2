@@ -1,0 +1,11 @@
+Grade a candidate answer against a reference answer written by a domain expert.
+
+<question>{{ question }}</question>
+<reference>{{ reference }}</reference>
+<candidate>{{ candidate }}</candidate>
+
+Score each criterion from 1 (fails) to 5 (fully meets):
+{% for name, c in rubric.criteria.items() -%}
+- {{ name }}: {{ c.description }}
+{% endfor %}
+Judge only the content. Ignore style, length and formatting unless they change the meaning.

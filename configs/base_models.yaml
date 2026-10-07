@@ -1,0 +1,62 @@
+# Base (student) models the factory knows how to fine-tune.
+#   backend:    tinylm (NumPy CPU reference model) | hf (TRL + PEFT)
+#   params_b:   parameter count in billions, used to pick a LoRA preset
+#   size_class: key into lora_presets.yaml
+#   chat:       whether the tokenizer ships a chat template
+
+tinylm-base:
+  backend: tinylm
+  params_b: 0.0004
+  size_class: tinylm
+  embed_dim: 48
+  context_window: 16
+  vocab_size: 4000
+  pretrain_epochs: 4
+
+Qwen/Qwen2.5-0.5B-Instruct:
+  backend: hf
+  params_b: 0.49
+  size_class: xs
+  chat: true
+
+Qwen/Qwen2.5-1.5B-Instruct:
+  backend: hf
+  params_b: 1.54
+  size_class: s
+  chat: true
+
+Qwen/Qwen2.5-3B-Instruct:
+  backend: hf
+  params_b: 3.09
+  size_class: s
+  chat: true
+
+Qwen/Qwen2.5-7B-Instruct:
+  backend: hf
+  params_b: 7.62
+  size_class: m
+  chat: true
+
+Qwen/Qwen3-0.6B:
+  backend: hf
+  params_b: 0.6
+  size_class: xs
+  chat: true
+
+Qwen/Qwen3-1.7B:
+  backend: hf
+  params_b: 1.7
+  size_class: s
+  chat: true
+
+Qwen/Qwen3-4B:
+  backend: hf
+  params_b: 4.0
+  size_class: s
+  chat: true
+
+meta-llama/Llama-3.2-3B-Instruct:
+  backend: hf
+  params_b: 3.21
+  size_class: s
+  chat: true

@@ -1,0 +1,52 @@
+# LoRA / QLoRA presets per base-model size class (FR-03).
+# `rank` is the default when the spec gives no rank_sweep; alpha is scaled with rank
+# during a sweep so alpha / rank (the update scale) stays constant.
+
+tinylm:
+  rank: 8
+  alpha: 16
+  dropout: 0.05
+  learning_rate: 0.02
+  weight_decay: 0.0001
+  epochs: 30
+  batch_size: 256
+  qlora: false
+
+xs: # < 1B parameters
+  rank: 16
+  alpha: 32
+  dropout: 0.05
+  learning_rate: 2.0e-4
+  weight_decay: 0.0
+  epochs: 3
+  batch_size: 8
+  grad_accum: 2
+  max_length: 1024
+  qlora: false
+  target_modules: [q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj]
+
+s: # 1B to 4B parameters
+  rank: 16
+  alpha: 32
+  dropout: 0.05
+  learning_rate: 1.5e-4
+  weight_decay: 0.0
+  epochs: 3
+  batch_size: 4
+  grad_accum: 4
+  max_length: 1024
+  qlora: true
+  target_modules: [q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj]
+
+m: # 4B to 14B parameters
+  rank: 32
+  alpha: 64
+  dropout: 0.05
+  learning_rate: 1.0e-4
+  weight_decay: 0.0
+  epochs: 2
+  batch_size: 2
+  grad_accum: 8
+  max_length: 1024
+  qlora: true
+  target_modules: [q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj]

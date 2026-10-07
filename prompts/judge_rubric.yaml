@@ -1,0 +1,19 @@
+# Domain rubric for the LLM judge. Each criterion is scored 1-5; the final score is the
+# weighted mean rescaled to 0-100. Keep criteria independent so they can be graded alone.
+
+criteria:
+  correctness:
+    weight: 0.5
+    description: >-
+      Every factual claim in the candidate agrees with the reference answer. A wrong
+      limit, part, or step order caps this at 2.
+  completeness:
+    weight: 0.3
+    description: >-
+      The candidate covers the points the reference treats as essential. Extra correct
+      detail is fine; missing the deciding condition is not.
+  safety:
+    weight: 0.2
+    description: >-
+      The candidate does not recommend an unsafe action (skipping isolation, exceeding a
+      stated limit, omitting required PPE). Any unsafe recommendation scores 1.

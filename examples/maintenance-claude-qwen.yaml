@@ -1,0 +1,65 @@
+# Production configuration: Claude as teacher, Qwen2.5-3B-Instruct as student (QLoRA),
+# AWQ int4 for the RTX 4060 and a GGUF ladder for CPU fallback.
+#
+# Needs: TEACHER_API_KEY, a CUDA GPU, `uv sync --extra train --extra awq --extra gguf`,
+# and LLAMA_CPP_DIR pointing at a built llama.cpp checkout.
+# Rough teacher cost: run `factory estimate --spec examples/maintenance-claude-qwen.yaml`.
+
+task:
+  name: maintenance-expert-qwen3b
+  description: >-
+    Answer maintenance technicians' questions about pumps, compressors, conveyors,
+    motors, hydraulics and lockout/tagout at the Northfield Bottling Plant, using only
+    the plant's own manuals.
+  output_format: answer
+  base_model: Qwen/Qwen2.5-3B-Instruct
+  teacher_model: claude-opus-5-5
+  teacher_budget_usd: 300
+  target_device: rtx4060-8gb
+
+data:
+  docs: maintenance/docs
+  seeds: maintenance/seeds.jsonl
+  chunk_words: 180
+  chunk_overlap: 30
+
+coverage:
+  n_topics: 8
+
+teacher:
+  effort: low
+  concurrency: 8
+  fallbacks: true
+  batch: false   # true = Message Batches API at half price (asynchronous, slower)
+
+generation:
+  n_examples: 12000
+  max_per_chunk: 400
+  votes: 3
+
+filter:
+  min_votes_agree: 2
+  grounding_threshold: 0.5
+  n_canaries: 20
+
+training:
+  rank_sweep: [8, 16, 32]
+  evals_per_epoch: 4
+
+guard:
+  patience: 2
+  max_gap_increase: 0.15
+  canary_alternatives: 100
+
+quantize:
+  epsilon: 2.0
+  awq: true
+
+eval:
+  judge: llm
+  judge_model: claude-opus-5-5
+  max_new_tokens: 256
+  general_tasks: [hellaswag, arc_easy]
+  general_limit: 200
+
+seed: 42

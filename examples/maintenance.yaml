@@ -1,0 +1,56 @@
+# Industrial maintenance expert, fully offline: no API key, no GPU, a few minutes on a laptop.
+# The student is the NumPy `tinylm` reference model and the teacher is the extractive
+# offline teacher, so this spec exercises every stage and gate for free. See
+# maintenance-claude-qwen.yaml for the production configuration.
+
+task:
+  name: maintenance-expert
+  description: >-
+    Answer maintenance technicians' questions about pumps, compressors, conveyors,
+    motors, hydraulics and lockout/tagout at the Northfield Bottling Plant, using only
+    the plant's own manuals.
+  output_format: answer
+  base_model: tinylm-base
+  teacher_model: offline
+  teacher_budget_usd: 0
+  target_device: cpu-16gb
+
+data:
+  docs: maintenance/docs
+  seeds: maintenance/seeds.jsonl
+  chunk_words: 120
+  chunk_overlap: 20
+  min_seeds: 50
+  val_fraction: 0.5
+
+coverage:
+  n_topics: 6
+
+generation:
+  n_examples: 800
+  max_per_chunk: 24
+  votes: 3
+
+filter:
+  min_votes_agree: 2
+  grounding_threshold: 0.6
+  dedupe_threshold: 0.8
+  leakage_threshold: 0.5
+  n_canaries: 10
+
+training:
+  rank_sweep: [4, 8, 16]
+  epochs: 30
+
+guard:
+  patience: 2
+  max_gap_increase: 0.5
+
+quantize:
+  epsilon: 2.0
+
+eval:
+  judge: lexical
+  max_new_tokens: 64
+
+seed: 42

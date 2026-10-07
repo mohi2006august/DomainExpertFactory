@@ -1,0 +1,10 @@
+Answer the question using only the source passages.
+
+{% for chunk in chunks -%}
+<source id="{{ chunk.id }}" title="{{ chunk.heading }}">
+{{ chunk.text }}
+</source>
+{% endfor %}
+<question>{{ question }}</question>
+
+Keep the answer to the length the question needs (usually one to five sentences).

@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+build/
+dist/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Factory outputs (runs, models, registry)
+workspace/
+mlruns/
+*.gguf
+*.safetensors
+
+# Dagster
+.dagster_home/
+tmp*/
+.tmp_dagster_home_*/
+dagster_home/
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

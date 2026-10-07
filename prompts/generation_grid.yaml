@@ -1,0 +1,31 @@
+# Diversity grid (FR-02). Cells are sampled uniformly from
+#   topic cluster x difficulty x format x persona.
+# A spec may list a subset of these keys, or override descriptions inline.
+
+difficulties:
+  easy: >-
+    A single fact stated directly in the passage. The answer is one or two sentences.
+  medium: >-
+    Combines two statements from the passage or applies a stated rule to a situation.
+    The answer is two to four sentences.
+  hard: >-
+    Needs multi-step reasoning over the passage, such as diagnosing a fault, weighing a
+    trade-off or ordering several steps. The answer is four to six sentences and names
+    the deciding condition.
+
+formats:
+  direct_question: A direct factual question.
+  troubleshooting: Describes a symptom or fault and asks what to check or do about it.
+  procedure: Asks for the steps of a task, in order.
+  definition: Asks what a term, part or specification means and why it matters.
+
+personas:
+  apprentice_technician: >-
+    An apprentice technician in their first year. Plain language, sometimes imprecise
+    names for parts.
+  senior_engineer: >-
+    A senior reliability engineer. Terse, precise jargon, quotes model numbers and limits.
+  safety_officer: >-
+    A health-and-safety officer focused on hazards, PPE, isolation and compliance.
+  plant_manager: >-
+    A plant manager focused on downtime, cost and scheduling of the work.

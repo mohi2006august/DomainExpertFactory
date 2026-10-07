@@ -1,0 +1,21 @@
+Write one training example grounded in the source passage below.
+
+<cell>
+Topic: {{ topic_label }}
+Difficulty ({{ cell.difficulty }}): {{ difficulty_description }}
+Format ({{ cell.format }}): {{ format_description }}
+Asker persona ({{ cell.persona }}): {{ persona_description }}
+</cell>
+{% if hard_example %}
+Production users struggled with questions like this one, so aim for a similarly tricky angle (do not copy it):
+<hard_example>{{ hard_example }}</hard_example>
+{% endif %}
+<source id="{{ chunk.id }}" title="{{ chunk.heading }}">
+{{ chunk.text }}
+</source>
+
+Return:
+- instruction: the question or request, written in the persona's own voice and matching the format and difficulty.
+- response: the ideal answer to the instruction, using only the passage.
+- rationale: one or two sentences on where in the passage the answer comes from and why it is correct.
+- source_chunk_ids: the ids of the passages that support the answer (normally ["{{ chunk.id }}"]).

@@ -1,0 +1,29 @@
+# Deployment targets (TaskSpec.target_device).
+#   preferred:          quantised formats in order of preference for this device
+#   max_model_gb:       release gate on artefact size (PRD: under 6 GB)
+#   cost_per_hour_usd:  amortised hardware cost, used for student cost per 1k answers
+#   min_tokens_per_s:   performance budget (TECHNICAL.md section 8)
+
+rtx4060-8gb:
+  kind: gpu
+  memory_gb: 8
+  preferred: [awq, gguf]
+  max_model_gb: 6.0
+  cost_per_hour_usd: 0.10
+  min_tokens_per_s: 30
+
+cpu-16gb:
+  kind: cpu
+  memory_gb: 16
+  preferred: [gguf]
+  max_model_gb: 6.0
+  cost_per_hour_usd: 0.04
+  min_tokens_per_s: 8
+
+a100-80gb:
+  kind: gpu
+  memory_gb: 80
+  preferred: [awq, gguf]
+  max_model_gb: 40.0
+  cost_per_hour_usd: 1.80
+  min_tokens_per_s: 60
